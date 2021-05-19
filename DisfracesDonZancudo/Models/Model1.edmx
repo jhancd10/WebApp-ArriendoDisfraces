@@ -1,0 +1,376 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DonZancudoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="cliente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rut" Type="varchar" MaxLength="12" Nullable="false" />
+          <Property Name="nombres" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="apellidos" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="telefono" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="disfraz">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="codigo" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="cantidad" Type="int" Nullable="false" />
+          <Property Name="tipo_disfraz_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="servicios">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="observacion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="fecha_arriendo" Type="date" Nullable="false" />
+          <Property Name="dias_arriendo" Type="int" Nullable="false" />
+          <Property Name="cliente_id" Type="int" Nullable="false" />
+          <Property Name="disfraz_id" Type="int" Nullable="false" />
+          <Property Name="tipo_pago_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tipo_disfraz">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="codigo" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tipo_pago">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="codigo" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="fecha_creacion" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="disfraz_tipo_disfraz">
+          <End Role="tipo_disfraz" Type="Self.tipo_disfraz" Multiplicity="1" />
+          <End Role="disfraz" Type="Self.disfraz" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipo_disfraz">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="disfraz">
+              <PropertyRef Name="tipo_disfraz_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="servicios_cliente">
+          <End Role="cliente" Type="Self.cliente" Multiplicity="1" />
+          <End Role="servicios" Type="Self.servicios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cliente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="servicios">
+              <PropertyRef Name="cliente_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="servicios_disfraz">
+          <End Role="disfraz" Type="Self.disfraz" Multiplicity="1" />
+          <End Role="servicios" Type="Self.servicios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="disfraz">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="servicios">
+              <PropertyRef Name="disfraz_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="servicios_tipo_pago">
+          <End Role="tipo_pago" Type="Self.tipo_pago" Multiplicity="1" />
+          <End Role="servicios" Type="Self.servicios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipo_pago">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="servicios">
+              <PropertyRef Name="tipo_pago_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DonZancudoModelStoreContainer">
+          <EntitySet Name="cliente" EntityType="Self.cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="disfraz" EntityType="Self.disfraz" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="servicios" EntityType="Self.servicios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tipo_disfraz" EntityType="Self.tipo_disfraz" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tipo_pago" EntityType="Self.tipo_pago" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="disfraz_tipo_disfraz" Association="Self.disfraz_tipo_disfraz">
+            <End Role="tipo_disfraz" EntitySet="tipo_disfraz" />
+            <End Role="disfraz" EntitySet="disfraz" />
+          </AssociationSet>
+          <AssociationSet Name="servicios_cliente" Association="Self.servicios_cliente">
+            <End Role="cliente" EntitySet="cliente" />
+            <End Role="servicios" EntitySet="servicios" />
+          </AssociationSet>
+          <AssociationSet Name="servicios_disfraz" Association="Self.servicios_disfraz">
+            <End Role="disfraz" EntitySet="disfraz" />
+            <End Role="servicios" EntitySet="servicios" />
+          </AssociationSet>
+          <AssociationSet Name="servicios_tipo_pago" Association="Self.servicios_tipo_pago">
+            <End Role="tipo_pago" EntitySet="tipo_pago" />
+            <End Role="servicios" EntitySet="servicios" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DonZancudoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="cliente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rut" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombres" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apellidos" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="telefono" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="servicios" Relationship="Self.servicios_cliente" FromRole="cliente" ToRole="servicios" />
+        </EntityType>
+        <EntityType Name="servicio">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="observacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fecha_arriendo" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="dias_arriendo" Type="Int32" Nullable="false" />
+          <Property Name="cliente_id" Type="Int32" Nullable="false" />
+          <Property Name="disfraz_id" Type="Int32" Nullable="false" />
+          <Property Name="tipo_pago_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="cliente" Relationship="Self.servicios_cliente" FromRole="servicios" ToRole="cliente" />
+          <NavigationProperty Name="tipo_pago" Relationship="Self.servicios_tipo_pago" FromRole="servicios" ToRole="tipo_pago" />
+          <NavigationProperty Name="disfraz" Relationship="DonZancudoModel.servicios_disfraz" FromRole="servicio" ToRole="disfraz" />
+        </EntityType>
+        <EntityType Name="tipo_pago">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="codigo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="servicios" Relationship="Self.servicios_tipo_pago" FromRole="tipo_pago" ToRole="servicios" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fecha_creacion" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <Association Name="servicios_cliente">
+          <End Role="cliente" Type="Self.cliente" Multiplicity="1" />
+          <End Role="servicios" Type="Self.servicio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cliente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="servicios">
+              <PropertyRef Name="cliente_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="servicios_tipo_pago">
+          <End Role="tipo_pago" Type="Self.tipo_pago" Multiplicity="1" />
+          <End Role="servicios" Type="Self.servicio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipo_pago">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="servicios">
+              <PropertyRef Name="tipo_pago_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DonZancudoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="clientes" EntityType="Self.cliente" />
+          <EntitySet Name="servicios" EntityType="Self.servicio" />
+          <EntitySet Name="tipo_pago" EntityType="Self.tipo_pago" />
+          <EntitySet Name="usuarios" EntityType="Self.usuario" />
+          <AssociationSet Name="servicios_cliente" Association="Self.servicios_cliente">
+            <End Role="cliente" EntitySet="clientes" />
+            <End Role="servicios" EntitySet="servicios" />
+          </AssociationSet>
+          <AssociationSet Name="servicios_tipo_pago" Association="Self.servicios_tipo_pago">
+            <End Role="tipo_pago" EntitySet="tipo_pago" />
+            <End Role="servicios" EntitySet="servicios" />
+          </AssociationSet>
+          <EntitySet Name="disfrazs" EntityType="DonZancudoModel.disfraz" />
+          <EntitySet Name="tipo_disfraz" EntityType="DonZancudoModel.tipo_disfraz" />
+          <AssociationSet Name="disfraz_tipo_disfraz" Association="DonZancudoModel.disfraz_tipo_disfraz">
+            <End Role="tipo_disfraz" EntitySet="tipo_disfraz" />
+            <End Role="disfraz" EntitySet="disfrazs" />
+          </AssociationSet>
+          <AssociationSet Name="servicios_disfraz" Association="DonZancudoModel.servicios_disfraz">
+            <End Role="disfraz" EntitySet="disfrazs" />
+            <End Role="servicio" EntitySet="servicios" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="disfraz">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <Property Name="tipo_disfraz_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tipo_disfraz" Relationship="DonZancudoModel.disfraz_tipo_disfraz" FromRole="disfraz" ToRole="tipo_disfraz" />
+          <NavigationProperty Name="servicios" Relationship="DonZancudoModel.servicios_disfraz" FromRole="disfraz" ToRole="servicio" />
+        </EntityType>
+        <EntityType Name="tipo_disfraz">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="disfrazs" Relationship="DonZancudoModel.disfraz_tipo_disfraz" FromRole="tipo_disfraz" ToRole="disfraz" />
+        </EntityType>
+        <Association Name="disfraz_tipo_disfraz">
+          <End Type="DonZancudoModel.tipo_disfraz" Role="tipo_disfraz" Multiplicity="1" />
+          <End Type="DonZancudoModel.disfraz" Role="disfraz" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipo_disfraz">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="disfraz">
+              <PropertyRef Name="tipo_disfraz_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="servicios_disfraz">
+          <End Type="DonZancudoModel.disfraz" Role="disfraz" Multiplicity="1" />
+          <End Type="DonZancudoModel.servicio" Role="servicio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="disfraz">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="servicio">
+              <PropertyRef Name="disfraz_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DonZancudoModelStoreContainer" CdmEntityContainer="DonZancudoEntities">
+          <EntitySetMapping Name="clientes">
+            <EntityTypeMapping TypeName="DonZancudoModel.cliente">
+              <MappingFragment StoreEntitySet="cliente">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="rut" ColumnName="rut" />
+                <ScalarProperty Name="nombres" ColumnName="nombres" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="servicios">
+            <EntityTypeMapping TypeName="DonZancudoModel.servicio">
+              <MappingFragment StoreEntitySet="servicios">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="observacion" ColumnName="observacion" />
+                <ScalarProperty Name="fecha_arriendo" ColumnName="fecha_arriendo" />
+                <ScalarProperty Name="dias_arriendo" ColumnName="dias_arriendo" />
+                <ScalarProperty Name="cliente_id" ColumnName="cliente_id" />
+                <ScalarProperty Name="disfraz_id" ColumnName="disfraz_id" />
+                <ScalarProperty Name="tipo_pago_id" ColumnName="tipo_pago_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tipo_pago">
+            <EntityTypeMapping TypeName="DonZancudoModel.tipo_pago">
+              <MappingFragment StoreEntitySet="tipo_pago">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuarios">
+            <EntityTypeMapping TypeName="DonZancudoModel.usuario">
+              <MappingFragment StoreEntitySet="usuario">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="disfrazs">
+            <EntityTypeMapping TypeName="DonZancudoModel.disfraz">
+              <MappingFragment StoreEntitySet="disfraz">
+                <ScalarProperty Name="tipo_disfraz_Id" ColumnName="tipo_disfraz_Id" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tipo_disfraz">
+            <EntityTypeMapping TypeName="DonZancudoModel.tipo_disfraz">
+              <MappingFragment StoreEntitySet="tipo_disfraz">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
