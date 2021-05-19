@@ -1,7 +1,7 @@
 # WebApp-ArriendoDisfraces
 Aplicación Web en C#.NET y EntityFramework que permita registrar los arriendos de los disfraces realizados en la tienda “Disfraces Don Zancudo”.
 
-##Descripción:
+## Descripción:
 Los arriendos de los disfraces en la tienda “Disfraces Don Zancudo” se han duplicado en el último mes, sin embargo no son capaces de registrar tantas ventas ya que la afluencia de público es demasiado para el actual sistema de registro. Es por este motivo que se le ha contactado y propuesto la realización de un sistema el cual pueda registrar los arriendos y estos queden asociados a los clientes.
 Los usuarios del sistema corresponderán al personal que manejará el sistema en la tienda de disfraces, por lo que para ingresar al sistema estos deberán proporcionar sus credenciales (Nombre Usuario y Password).
 
@@ -12,11 +12,13 @@ Los usuarios del sistema corresponderán al personal que manejará el sistema en
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 
-##Reporte:
+## Reporte:
 Se requiere mostrar una tabla para el administrador con la siguiente información:
 - Nombre Cliente: Corresponderá al nombre completo del cliente.
 - Nombre Disfraz.
 - Tipo Pago: Nombre tipo pago
 - Tipo Disfraz: Nombre tipo del disfraz.
 - Fecha de arriendo: la fecha de arriendo del disfraz.
-- Fecha de termino arriendo: la fecha de arriendo mas los días de arriendo. **Las fechas deben tener el formato dd-MM-yyyy**
+- Fecha de termino arriendo: la fecha de arriendo mas los días de arriendo. 
+
+**Las fechas deben tener el formato dd-MM-yyyy**
