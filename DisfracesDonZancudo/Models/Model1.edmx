@@ -4,12 +4,12 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="DonZancudoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DonZancudoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="cliente">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="rut" Type="varchar" MaxLength="12" Nullable="false" />
           <Property Name="nombres" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="apellidos" Type="varchar" MaxLength="25" Nullable="false" />
@@ -19,18 +19,18 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" />
           <Property Name="codigo" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="descripcion" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="cantidad" Type="int" Nullable="false" />
-          <Property Name="tipo_disfraz_Id" Type="int" Nullable="false" />
+          <Property Name="tipo_disfraz_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="servicios">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="observacion" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="fecha_arriendo" Type="date" Nullable="false" />
           <Property Name="dias_arriendo" Type="int" Nullable="false" />
@@ -42,7 +42,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" />
           <Property Name="codigo" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
@@ -50,7 +50,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="codigo" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="descripcion" Type="varchar" MaxLength="50" Nullable="false" />
@@ -59,7 +59,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="username" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="password" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="fecha_creacion" Type="date" Nullable="false" />
@@ -72,7 +72,7 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="disfraz">
-              <PropertyRef Name="tipo_disfraz_Id" />
+              <PropertyRef Name="tipo_disfraz_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -232,17 +232,17 @@
             <End Role="disfraz" EntitySet="disfrazs" />
             <End Role="servicio" EntitySet="servicios" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="disfraz">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="nombre" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="cantidad" Type="Int32" Nullable="false" />
-          <Property Name="tipo_disfraz_Id" Type="Int32" Nullable="false" />
+          <Property Name="tipo_disfraz_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="tipo_disfraz" Relationship="DonZancudoModel.disfraz_tipo_disfraz" FromRole="disfraz" ToRole="tipo_disfraz" />
           <NavigationProperty Name="servicios" Relationship="DonZancudoModel.servicios_disfraz" FromRole="disfraz" ToRole="servicio" />
         </EntityType>
@@ -250,7 +250,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="nombre" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="disfrazs" Relationship="DonZancudoModel.disfraz_tipo_disfraz" FromRole="tipo_disfraz" ToRole="disfraz" />
@@ -263,7 +263,7 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="disfraz">
-              <PropertyRef Name="tipo_disfraz_Id" />
+              <PropertyRef Name="tipo_disfraz_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -279,7 +279,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -332,7 +332,7 @@
           <EntitySetMapping Name="disfrazs">
             <EntityTypeMapping TypeName="DonZancudoModel.disfraz">
               <MappingFragment StoreEntitySet="disfraz">
-                <ScalarProperty Name="tipo_disfraz_Id" ColumnName="tipo_disfraz_Id" />
+                <ScalarProperty Name="tipo_disfraz_id" ColumnName="tipo_disfraz_id" />
                 <ScalarProperty Name="cantidad" ColumnName="cantidad" />
                 <ScalarProperty Name="descripcion" ColumnName="descripcion" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
@@ -350,7 +350,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

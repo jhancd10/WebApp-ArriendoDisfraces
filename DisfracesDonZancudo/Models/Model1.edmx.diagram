@@ -15,7 +15,7 @@
         <EntityTypeShape EntityType="DonZancudoModel.tipo_disfraz" Width="1.5" PointX="0.75" PointY="11.375" />
         <AssociationConnector Association="DonZancudoModel.disfraz_tipo_disfraz" />
         <AssociationConnector Association="DonZancudoModel.servicios_disfraz" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

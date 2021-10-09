@@ -97,12 +97,12 @@
     <Key>
       <PropertyRef Name="id" />
     </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id" Type="Int32" Nullable="false" />
     <Property Name="codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
     <Property Name="nombre" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
     <Property Name="descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="cantidad" Type="Int32" Nullable="false" />
-    <Property Name="tipo_disfraz_Id" Type="Int32" Nullable="false" />
+    <Property Name="tipo_disfraz_id" Type="Int32" Nullable="false" />
     <NavigationProperty Name="tipo_disfraz" Relationship="DonZancudoModel.disfraz_tipo_disfraz" FromRole="disfraz" ToRole="tipo_disfraz" />
     <NavigationProperty Name="servicios" Relationship="DonZancudoModel.servicios_disfraz" FromRole="disfraz" ToRole="servicio" />
   </EntityType>
@@ -110,7 +110,7 @@
     <Key>
       <PropertyRef Name="id" />
     </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id" Type="Int32" Nullable="false" />
     <Property Name="codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
     <Property Name="nombre" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="disfrazs" Relationship="DonZancudoModel.disfraz_tipo_disfraz" FromRole="tipo_disfraz" ToRole="disfraz" />
@@ -123,7 +123,7 @@
         <PropertyRef Name="id" />
       </Principal>
       <Dependent Role="disfraz">
-        <PropertyRef Name="tipo_disfraz_Id" />
+        <PropertyRef Name="tipo_disfraz_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="DonZancudoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="DonZancudoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="cliente">
     <Key>
       <PropertyRef Name="id" />
     </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="rut" Type="varchar" MaxLength="12" Nullable="false" />
     <Property Name="nombres" Type="varchar" MaxLength="25" Nullable="false" />
     <Property Name="apellidos" Type="varchar" MaxLength="25" Nullable="false" />
@@ -14,18 +14,18 @@
     <Key>
       <PropertyRef Name="id" />
     </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id" Type="int" Nullable="false" />
     <Property Name="codigo" Type="varchar" MaxLength="10" Nullable="false" />
     <Property Name="nombre" Type="varchar" MaxLength="20" Nullable="false" />
     <Property Name="descripcion" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="cantidad" Type="int" Nullable="false" />
-    <Property Name="tipo_disfraz_Id" Type="int" Nullable="false" />
+    <Property Name="tipo_disfraz_id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="servicios">
     <Key>
       <PropertyRef Name="id" />
     </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="observacion" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="fecha_arriendo" Type="date" Nullable="false" />
     <Property Name="dias_arriendo" Type="int" Nullable="false" />
@@ -37,7 +37,7 @@
     <Key>
       <PropertyRef Name="id" />
     </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id" Type="int" Nullable="false" />
     <Property Name="codigo" Type="varchar" MaxLength="10" Nullable="false" />
     <Property Name="nombre" Type="varchar" MaxLength="20" Nullable="false" />
   </EntityType>
@@ -45,7 +45,7 @@
     <Key>
       <PropertyRef Name="id" />
     </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="codigo" Type="varchar" MaxLength="10" Nullable="false" />
     <Property Name="nombre" Type="varchar" MaxLength="20" Nullable="false" />
     <Property Name="descripcion" Type="varchar" MaxLength="50" Nullable="false" />
@@ -54,7 +54,7 @@
     <Key>
       <PropertyRef Name="id" />
     </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="username" Type="varchar" MaxLength="20" Nullable="false" />
     <Property Name="password" Type="varchar" MaxLength="20" Nullable="false" />
     <Property Name="fecha_creacion" Type="date" Nullable="false" />
@@ -67,7 +67,7 @@
         <PropertyRef Name="id" />
       </Principal>
       <Dependent Role="disfraz">
-        <PropertyRef Name="tipo_disfraz_Id" />
+        <PropertyRef Name="tipo_disfraz_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -14,7 +14,7 @@ CREATE TABLE cliente (
 
 -- Table: disfraz
 CREATE TABLE disfraz (
-    id int  NOT NULL,
+    id int  NOT NULL,ins
     codigo varchar(10)  NOT NULL,
     nombre varchar(20)  NOT NULL,
     descripcion varchar(100)  NOT NULL,
@@ -82,5 +82,22 @@ ALTER TABLE servicios ADD CONSTRAINT servicios_tipo_pago
     FOREIGN KEY (tipo_pago_id)
     REFERENCES tipo_pago (id);
 
--- End of file.
 
+
+-- Structure
+insert into [dbo].[usuario] (id, username, password, fecha_creacion)
+values(1, 'admin', 'admin', convert(datetime,'08-10-21 10:34:09 PM',1));
+
+insert into [dbo].[tipo_disfraz]
+values (1, 'N', 'Nuevo');
+
+insert into [dbo].[tipo_disfraz]
+values (2, 'S', 'Segunda Mano');
+
+insert into [dbo].[tipo_disfraz]
+values (3, 'D', 'Defectuoso');
+
+insert into [dbo].[tipo_disfraz]
+values (4, 'A', 'Americana');
+
+-- End of file.

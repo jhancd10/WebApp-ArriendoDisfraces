@@ -48,7 +48,7 @@
     <EntitySetMapping Name="disfrazs">
       <EntityTypeMapping TypeName="DonZancudoModel.disfraz">
         <MappingFragment StoreEntitySet="disfraz">
-          <ScalarProperty Name="tipo_disfraz_Id" ColumnName="tipo_disfraz_Id" />
+          <ScalarProperty Name="tipo_disfraz_id" ColumnName="tipo_disfraz_id" />
           <ScalarProperty Name="cantidad" ColumnName="cantidad" />
           <ScalarProperty Name="descripcion" ColumnName="descripcion" />
           <ScalarProperty Name="nombre" ColumnName="nombre" />

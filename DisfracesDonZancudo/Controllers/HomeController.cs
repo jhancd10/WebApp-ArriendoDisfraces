@@ -32,7 +32,7 @@ namespace DisfracesDonZancudo.Controllers
                                  join disf in contexto.disfrazs.AsNoTracking()
                                  on serv.disfraz_id equals disf.id
                                  join tipoDisf in contexto.tipo_disfraz.AsNoTracking()
-                                 on disf.tipo_disfraz_Id equals tipoDisf.id
+                                 on disf.tipo_disfraz_id equals tipoDisf.id
                                  join tipoPag in contexto.tipo_pago.AsNoTracking()
                                  on serv.tipo_pago_id equals tipoPag.id
                                  select new
