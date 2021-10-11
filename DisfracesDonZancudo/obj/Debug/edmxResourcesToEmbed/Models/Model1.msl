@@ -1,30 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="DonZancudoModelStoreContainer" CdmEntityContainer="DonZancudoEntities">
-    <EntitySetMapping Name="clientes">
-      <EntityTypeMapping TypeName="DonZancudoModel.cliente">
-        <MappingFragment StoreEntitySet="cliente">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="rut" ColumnName="rut" />
-          <ScalarProperty Name="nombres" ColumnName="nombres" />
-          <ScalarProperty Name="apellidos" ColumnName="apellidos" />
-          <ScalarProperty Name="telefono" ColumnName="telefono" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="servicios">
-      <EntityTypeMapping TypeName="DonZancudoModel.servicio">
-        <MappingFragment StoreEntitySet="servicios">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="observacion" ColumnName="observacion" />
-          <ScalarProperty Name="fecha_arriendo" ColumnName="fecha_arriendo" />
-          <ScalarProperty Name="dias_arriendo" ColumnName="dias_arriendo" />
-          <ScalarProperty Name="cliente_id" ColumnName="cliente_id" />
-          <ScalarProperty Name="disfraz_id" ColumnName="disfraz_id" />
-          <ScalarProperty Name="tipo_pago_id" ColumnName="tipo_pago_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="tipo_pago">
       <EntityTypeMapping TypeName="DonZancudoModel.tipo_pago">
         <MappingFragment StoreEntitySet="tipo_pago">
@@ -60,6 +36,43 @@
     <EntitySetMapping Name="tipo_disfraz">
       <EntityTypeMapping TypeName="DonZancudoModel.tipo_disfraz">
         <MappingFragment StoreEntitySet="tipo_disfraz">
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="codigo" ColumnName="codigo" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="clientes">
+      <EntityTypeMapping TypeName="DonZancudoModel.cliente">
+        <MappingFragment StoreEntitySet="cliente">
+          <ScalarProperty Name="tipo_cliente_id" ColumnName="tipo_cliente_id" />
+          <ScalarProperty Name="total_servicios" ColumnName="total_servicios" />
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+          <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+          <ScalarProperty Name="nombres" ColumnName="nombres" />
+          <ScalarProperty Name="rut" ColumnName="rut" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="servicios">
+      <EntityTypeMapping TypeName="DonZancudoModel.servicio">
+        <MappingFragment StoreEntitySet="servicios">
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="tipo_pago_id" ColumnName="tipo_pago_id" />
+          <ScalarProperty Name="disfraz_id" ColumnName="disfraz_id" />
+          <ScalarProperty Name="cliente_id" ColumnName="cliente_id" />
+          <ScalarProperty Name="dias_arriendo" ColumnName="dias_arriendo" />
+          <ScalarProperty Name="fecha_arriendo" ColumnName="fecha_arriendo" />
+          <ScalarProperty Name="observacion" ColumnName="observacion" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tipo_cliente">
+      <EntityTypeMapping TypeName="DonZancudoModel.tipo_cliente">
+        <MappingFragment StoreEntitySet="tipo_cliente">
+          <ScalarProperty Name="arriendos_permitidos" ColumnName="arriendos_permitidos" />
           <ScalarProperty Name="nombre" ColumnName="nombre" />
           <ScalarProperty Name="codigo" ColumnName="codigo" />
           <ScalarProperty Name="id" ColumnName="id" />

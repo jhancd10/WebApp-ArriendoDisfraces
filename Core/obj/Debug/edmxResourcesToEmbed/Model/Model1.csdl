@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DonZancudoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="DonZancudoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="clientes" EntityType="DonZancudoModel.cliente" />
+    <EntitySet Name="disfrazs" EntityType="DonZancudoModel.disfraz" />
+    <EntitySet Name="servicios" EntityType="DonZancudoModel.servicio" />
+    <EntitySet Name="tipo_cliente" EntityType="DonZancudoModel.tipo_cliente" />
+    <EntitySet Name="tipo_disfraz" EntityType="DonZancudoModel.tipo_disfraz" />
+    <EntitySet Name="tipo_pago" EntityType="DonZancudoModel.tipo_pago" />
+    <EntitySet Name="usuarios" EntityType="DonZancudoModel.usuario" />
+    <AssociationSet Name="cliente_tipo_cliente" Association="DonZancudoModel.cliente_tipo_cliente">
+      <End Role="tipo_cliente" EntitySet="tipo_cliente" />
+      <End Role="cliente" EntitySet="clientes" />
+    </AssociationSet>
+    <AssociationSet Name="servicios_cliente" Association="DonZancudoModel.servicios_cliente">
+      <End Role="cliente" EntitySet="clientes" />
+      <End Role="servicio" EntitySet="servicios" />
+    </AssociationSet>
+    <AssociationSet Name="disfraz_tipo_disfraz" Association="DonZancudoModel.disfraz_tipo_disfraz">
+      <End Role="tipo_disfraz" EntitySet="tipo_disfraz" />
+      <End Role="disfraz" EntitySet="disfrazs" />
+    </AssociationSet>
+    <AssociationSet Name="servicios_disfraz" Association="DonZancudoModel.servicios_disfraz">
+      <End Role="disfraz" EntitySet="disfrazs" />
+      <End Role="servicio" EntitySet="servicios" />
+    </AssociationSet>
+    <AssociationSet Name="servicios_tipo_pago" Association="DonZancudoModel.servicios_tipo_pago">
+      <End Role="tipo_pago" EntitySet="tipo_pago" />
+      <End Role="servicio" EntitySet="servicios" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="cliente">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="rut" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="nombres" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="apellidos" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="telefono" Type="Int32" Nullable="false" />
+    <Property Name="total_servicios" Type="Int32" Nullable="false" />
+    <Property Name="tipo_cliente_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tipo_cliente" Relationship="DonZancudoModel.cliente_tipo_cliente" FromRole="cliente" ToRole="tipo_cliente" />
+    <NavigationProperty Name="servicios" Relationship="DonZancudoModel.servicios_cliente" FromRole="cliente" ToRole="servicio" />
+  </EntityType>
+  <EntityType Name="disfraz">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="nombre" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="cantidad" Type="Int32" Nullable="false" />
+    <Property Name="tipo_disfraz_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tipo_disfraz" Relationship="DonZancudoModel.disfraz_tipo_disfraz" FromRole="disfraz" ToRole="tipo_disfraz" />
+    <NavigationProperty Name="servicios" Relationship="DonZancudoModel.servicios_disfraz" FromRole="disfraz" ToRole="servicio" />
+  </EntityType>
+  <EntityType Name="servicio">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="observacion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="fecha_arriendo" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="dias_arriendo" Type="Int32" Nullable="false" />
+    <Property Name="cliente_id" Type="Int32" Nullable="false" />
+    <Property Name="disfraz_id" Type="Int32" Nullable="false" />
+    <Property Name="tipo_pago_id" Type="Int32" Nullable="false" />
+    <Property Name="cantidad" Type="Int32" Nullable="false" />
+    <Property Name="estado" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="cliente" Relationship="DonZancudoModel.servicios_cliente" FromRole="servicio" ToRole="cliente" />
+    <NavigationProperty Name="disfraz" Relationship="DonZancudoModel.servicios_disfraz" FromRole="servicio" ToRole="disfraz" />
+    <NavigationProperty Name="tipo_pago" Relationship="DonZancudoModel.servicios_tipo_pago" FromRole="servicio" ToRole="tipo_pago" />
+  </EntityType>
+  <EntityType Name="tipo_cliente">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="nombre" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="arriendos_permitidos" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="clientes" Relationship="DonZancudoModel.cliente_tipo_cliente" FromRole="tipo_cliente" ToRole="cliente" />
+  </EntityType>
+  <EntityType Name="tipo_disfraz">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="nombre" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="disfrazs" Relationship="DonZancudoModel.disfraz_tipo_disfraz" FromRole="tipo_disfraz" ToRole="disfraz" />
+  </EntityType>
+  <EntityType Name="tipo_pago">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="codigo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="nombre" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="servicios" Relationship="DonZancudoModel.servicios_tipo_pago" FromRole="tipo_pago" ToRole="servicio" />
+  </EntityType>
+  <EntityType Name="usuario">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="username" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="password" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="fecha_creacion" Type="DateTime" Nullable="false" Precision="0" />
+  </EntityType>
+  <Association Name="cliente_tipo_cliente">
+    <End Type="DonZancudoModel.tipo_cliente" Role="tipo_cliente" Multiplicity="1" />
+    <End Type="DonZancudoModel.cliente" Role="cliente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tipo_cliente">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="cliente">
+        <PropertyRef Name="tipo_cliente_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="servicios_cliente">
+    <End Type="DonZancudoModel.cliente" Role="cliente" Multiplicity="1" />
+    <End Type="DonZancudoModel.servicio" Role="servicio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cliente">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="servicio">
+        <PropertyRef Name="cliente_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="disfraz_tipo_disfraz">
+    <End Type="DonZancudoModel.tipo_disfraz" Role="tipo_disfraz" Multiplicity="1" />
+    <End Type="DonZancudoModel.disfraz" Role="disfraz" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tipo_disfraz">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="disfraz">
+        <PropertyRef Name="tipo_disfraz_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="servicios_disfraz">
+    <End Type="DonZancudoModel.disfraz" Role="disfraz" Multiplicity="1" />
+    <End Type="DonZancudoModel.servicio" Role="servicio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="disfraz">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="servicio">
+        <PropertyRef Name="disfraz_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="servicios_tipo_pago">
+    <End Type="DonZancudoModel.tipo_pago" Role="tipo_pago" Multiplicity="1" />
+    <End Type="DonZancudoModel.servicio" Role="servicio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tipo_pago">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="servicio">
+        <PropertyRef Name="tipo_pago_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

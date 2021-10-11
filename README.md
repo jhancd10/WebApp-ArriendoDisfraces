@@ -22,3 +22,20 @@ Se requiere mostrar una tabla para el administrador con la siguiente informació
 - Fecha de termino arriendo: la fecha de arriendo mas los días de arriendo. 
 
 **Las fechas deben tener el formato dd-MM-yyyy**
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Despliegue: Localhost
+
+## BD
+* Descargar e Instalar SQL Server Express: https://docs.microsoft.com/en-us/sql/database-engine/configure-windows/sql-server-express-localdb?view=sql-server-ver15
+* Conectarse al Servidor Local.
+* Crear una BD llamada: DonZancudo
+* Crear un nuevo espacio de trabajo en DonZancudo.
+* Ejecutar el script: **DonZancudoDB_create.sql**
+
+## Proyecto
+* Abrir el proyecto **DisfracesDonZancudo.sln**
+* Limpiar Solución.
+* Compilar, Recompilar.
+* Correr la solución.

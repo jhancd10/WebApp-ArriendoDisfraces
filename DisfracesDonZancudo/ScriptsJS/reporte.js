@@ -15,25 +15,27 @@
             var addData = [];
             addData.push(item.ID);
             addData.push('<div  style="text-align:center">' + item.NOMBRECLIENTE + '</div>');
+            addData.push('<div  style="text-align:center">' + item.TIPOCLIENTE + '</div>');
             addData.push('<div  style="text-align:center">' + item.NOMBREDISFRAZ + '</div>');
             addData.push('<div  style="text-align:center">' + item.TIPOPAGO + '</div>');
             addData.push('<div  style="text-align:center">' + item.TIPODISFRAZ + '</div>');
+            addData.push('<div  style="text-align:center">' + item.CANTIDAD + '</div>');
             addData.push('<div  style="text-align:center">' + ConvertDateJSfromDateJSON(item.FECHAARRIENDO) + '</div>');
             addData.push('<div  style="text-align:center">' + ConvertDateJSfromDateJSON(item.FECHAFINALIZACION) + '</div>');
+
+            if (item.ESTADO == true) {
+                addData.push('<div  style="text-align:center"><button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#mFinalizarServicio" id="' + item.ID + '"><span class="fas fa-redo" aria-hidden="true"></span></button></div>');
+            } else { addData.push(''); }
+
             dtListado.fnAddData(addData);
         });
 
-        
-
     }).fail(function () {
-        dtListado._fnClearTable();
-        
+        dtListado._fnClearTable(); 
     });
 }
 
 function GetListadoDisfraz() {
-
-    
 
     $.post('/Home/GetListadoDisfraz', null, function (data) {
 
@@ -49,14 +51,10 @@ function GetListadoDisfraz() {
         $('#selectedDisfraz').empty();
         $('#selectedDisfraz').append('<option value="0">---</option>');
 
-    }).always(function () {
-        
     });
 }
 
 function GetListadoTipoDisfraz() {
-
-    
 
     $.post('/Home/GetListadoTipoDisfraz', null, function (data) {
 
@@ -72,14 +70,10 @@ function GetListadoTipoDisfraz() {
         $('#selectedTipoDisfraz').empty();
         $('#selectedTipoDisfraz').append('<option value="0">---</option>');
 
-    }).always(function () {
-        
     });
 }
 
 function GetListadoTipoPago() {
-
-    
 
     $.post('/Home/GetListadoTipoPago', null, function (data) {
 
@@ -95,8 +89,6 @@ function GetListadoTipoPago() {
         $('#selectedTipoPago').empty();
         $('#selectedTipoPago').append('<option value="0">---</option>');
 
-    }).always(function () {
-        
     });
 }
 
@@ -106,7 +98,7 @@ $('#btnModalAdicionar').click(function () {
 
 $('#btnAdicionar').click(function () {
 
-    if ($("#rut").val() == "" || $("#nombres").val() == "" || $("#apellidos").val() == "" || $("#telefono").val() == "" || $("#diasArriendo").val() == "") {
+    if ($("#rut").val() == "" || $("#nombres").val() == "" || $("#apellidos").val() == "" || $("#telefono").val() == "" || $("#diasArriendo").val() == "" || $("#cantidad").val() == "") {
         $('#lblTituloMensaje').text("Alerta");
         $('#lblMensaje').text("Se deben llenar todos los campos.");
         $('#mMensaje').modal('show');
@@ -125,8 +117,6 @@ $('#btnAdicionar').click(function () {
     if (moment(fechaArrend).isValid()) {
         if (moment().diff(fechaArrend, 'days') > 0) {
 
-            
-
             var params = {
                 rut: $('#rut').val(),
                 nombres: $("#nombres").val(),
@@ -136,50 +126,39 @@ $('#btnAdicionar').click(function () {
                 fechaArriendo: fechaArrend,
                 diasArriendo: $('#diasArriendo').val(),
                 tipoPagoId: $('#selectedTipoPago').val(),
-                observacion: $('#observacion').val()
+                observacion: $('#observacion').val(),
+                cantidad: $("#cantidad").val()
             };
 
             console.log(params);
 
-            $.post('/Home/Create', params, function (data) {
+            $.post('/Home/CreateArriendo', params, function (data) {
 
-                $('#mAdicionar').modal('hide');
-
-                if (data == -1) {
+                if (!data.Status) {
                     $('#lblTituloMensaje').text("Alerta");
-                    $('#lblMensaje').text("Se ha presentado un problema al adicionar el registro. Consulte con el administrador del sistema.");
+                    $('#lblMensaje').text(data.Message);
                     $('#mMensaje').modal('show');
                 }
+
                 else {
+                    $('#mAdicionar').modal('hide');
 
-                    if (data == -2) {
-                        $('#lblTituloMensaje').text("Alerta");
-                        $('#lblMensaje').text("El RUT del cliente no cumple con el formato aceptado. Intentelo nuevamente.");
-                        $('#mMensaje').modal('show');
-                    }
+                    $("#rut").val('');
+                    $("#nombres").val('');
+                    $("#apellidos").val('');
+                    $("#telefono").val('');
+                    $("#selectedDisfraz").val(0);
+                    $('#diasArriendo').val('');
+                    $('#selectedTipoPago').val(0);
 
-                    else {
-                        $('#lblTituloMensaje').text("Mensaje");
-                        $('#lblMensaje').text("El registro se ha añadido exitosamente.");
-                        $('#mMensaje').modal('show');
+                    GetListado();
 
-                        $('#mAdicionar').modal('hide');
-
-                        $("#rut").val('');
-                        $("#nombres").val('');
-                        $("#apellidos").val('');
-                        $("#telefono").val('');
-                        $("#selectedDisfraz").val(0);
-                        $('#diasArriendo').val('');
-                        $('#selectedTipoPago').val(0);
-
-                        GetListado();
-                    }
+                    $('#lblTituloMensaje').text("Alerta");
+                    $('#lblMensaje').text(data.Message);
+                    $('#mMensaje').modal('show');
                 }
-                
 
             }).fail(function () {
-                
                 $('#lblTituloMensaje').text("Alerta");
                 $('#lblMensaje').text("Se ha presentado un error inesperado. Consulte con el administrador del sistema.");
                 $('#mMensaje').modal('show');
@@ -196,5 +175,41 @@ $('#btnAdicionar').click(function () {
         $('#lblMensaje').text("Ingrese una fecha de arrendamiento valida.");
         $('#mMensaje').modal('show');
     }
-    
 });
+
+var servicioId;
+$('#mFinalizarServicio').on('show.bs.modal', function (e) {
+    var $modal = $(e.relatedTarget)
+    id = e.relatedTarget.id;
+    servicioId = id;
+});
+
+function FinalizarArriendo() {
+
+    var params = {
+        ServicioId: servicioId
+    };
+
+    PostAjax('/CentroDistribucion/FinalizarArriendo', params, function (data) {
+
+        if (!data.Status) {
+            $('#lblTituloMensaje').text("Alerta");
+            $('#lblMensaje').text(data.Message);
+            $('#mMensaje').modal('show');
+        }
+
+        else {
+            $('#mFinalizarServicio').modal('hide');
+            GetListado();
+
+            $('#lblTituloMensaje').text("Alerta");
+            $('#lblMensaje').text(data.Message);
+            $('#mMensaje').modal('show');
+        }
+
+    }).fail(function () {
+        $('#lblTituloMensaje').text("Alerta");
+        $('#lblMensaje').text("Se ha presentado un error inesperado. Consulte con el administrador del sistema.");
+        $('#mMensaje').modal('show');
+    });
+}

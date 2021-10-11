@@ -1,10 +1,11 @@
-﻿using DisfracesDonZancudo.Models;
-using DisfracesDonZancudo.Models.Export;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Core.Logic;
+using Core.Class;
+using Core.Model;
 
 namespace DisfracesDonZancudo.Controllers
 {
@@ -21,48 +22,10 @@ namespace DisfracesDonZancudo.Controllers
             List<REPORTE_SERVICIOS> resultado = new List<REPORTE_SERVICIOS>();
             try
             {
-                using (DonZancudoEntities contexto = new DonZancudoEntities())
-                {
-                    contexto.Configuration.LazyLoadingEnabled = false;
-                    contexto.Configuration.ProxyCreationEnabled = false;
-
-                    resultado = (from serv in contexto.servicios.AsNoTracking()
-                                 join client in contexto.clientes.AsNoTracking()
-                                 on serv.cliente_id equals client.id
-                                 join disf in contexto.disfrazs.AsNoTracking()
-                                 on serv.disfraz_id equals disf.id
-                                 join tipoDisf in contexto.tipo_disfraz.AsNoTracking()
-                                 on disf.tipo_disfraz_id equals tipoDisf.id
-                                 join tipoPag in contexto.tipo_pago.AsNoTracking()
-                                 on serv.tipo_pago_id equals tipoPag.id
-                                 select new
-                                 {
-                                     serv,
-                                     client,
-                                     disf,
-                                     tipoDisf,
-                                     tipoPag
-                                 }).Select(x => new REPORTE_SERVICIOS() 
-                                 {
-                                     ID = x.serv.id,
-                                     NOMBRECLIENTE = x.client.nombres + " " + x.client.apellidos,
-                                     NOMBREDISFRAZ = x.disf.nombre,
-                                     TIPOPAGO = x.tipoPag.nombre,
-                                     TIPODISFRAZ = x.tipoDisf.nombre,
-                                     FECHAARRIENDO = x.serv.fecha_arriendo,
-                                     DIASARRIENDO = x.serv.dias_arriendo
-                                 }).ToList();
-                    
-                    resultado.ForEach(item =>
-                    {
-                        item.FECHAFINALIZACION = item.FECHAARRIENDO.AddDays(item.DIASARRIENDO);
-                    });
-                    resultado = resultado.OrderByDescending(x => x.FECHAFINALIZACION).ToList();
-                }
+                Servicios Servicios = new Servicios();
+                resultado = Servicios.GetListadoArriendos();
             }
-            catch (Exception ex)
-            {
-            }
+            catch (Exception ex) { }
 
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
@@ -77,12 +40,12 @@ namespace DisfracesDonZancudo.Controllers
                 {
                     contexto.Configuration.LazyLoadingEnabled = false;
                     contexto.Configuration.ProxyCreationEnabled = false;
-                    resultado = (from row in contexto.disfrazs select row).ToList();
+                    resultado = contexto.disfrazs.Where(x => x.cantidad != 0).ToList();
                 }
             }
-            catch (Exception ex)
-            {
-            }
+
+            catch (Exception ex) { }
+
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
 
@@ -99,9 +62,9 @@ namespace DisfracesDonZancudo.Controllers
                     resultado = (from row in contexto.tipo_disfraz select row).ToList();
                 }
             }
-            catch (Exception ex)
-            {
-            }
+
+            catch (Exception ex) { }
+
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
 
@@ -118,62 +81,39 @@ namespace DisfracesDonZancudo.Controllers
                     resultado = (from row in contexto.tipo_pago select row).ToList();
                 }
             }
-            catch (Exception ex)
-            {
-            }
+            
+            catch (Exception ex) { }
+
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public JsonResult Create(string rut, string nombres, string apellidos, int telefono, int disfrazId, DateTime fechaArriendo, 
-            int diasArriendo, int tipoPagoId, string observacion)
+        public JsonResult CreateArriendo(string rut, string nombres, string apellidos, int telefono, 
+            int disfrazId, DateTime fechaArriendo, int diasArriendo, int tipoPagoId, string observacion, int cantidad)
         {
-            int resultado = -1;
+            Response resultado = new Response();
             try
             {
-                using (DonZancudoEntities contexto = new DonZancudoEntities())
-                {
-                    contexto.Configuration.LazyLoadingEnabled = false;
-                    contexto.Configuration.ProxyCreationEnabled = false;
-
-                    int clienteId = 0;
-
-                    cliente clienteAct = contexto.clientes.Where(x => x.rut == rut).FirstOrDefault();
-                    if (clienteAct == null)
-                    {
-                        cliente newcliente = new cliente()
-                        {
-                            rut = rut,
-                            nombres = nombres,
-                            apellidos = apellidos,
-                            telefono = telefono
-                        };
-                        contexto.clientes.Add(newcliente);
-                        contexto.SaveChanges();
-
-                        clienteId = contexto.clientes.Max(x => x.id);
-                    }
-                    else {
-                        clienteId = clienteAct.id;
-                    }
-
-                    servicio newServicio = new servicio()
-                    {
-                        observacion = observacion,
-                        fecha_arriendo = fechaArriendo,
-                        dias_arriendo = diasArriendo,
-                        cliente_id = clienteId,
-                        disfraz_id = disfrazId,
-                        tipo_pago_id = tipoPagoId
-                    };
-                    contexto.servicios.Add(newServicio);
-                    contexto.SaveChanges();
-                    resultado = 0;
-                }
+                Servicios Servicios = new Servicios();
+                resultado = Servicios.Create(rut, nombres, apellidos, telefono, disfrazId, 
+                    fechaArriendo, diasArriendo, tipoPagoId, observacion, cantidad);
             }
-            catch (Exception ex)
+            catch (Exception ex) { }
+
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult FinalizarArriendo(int ServicioId)
+        {
+            Response resultado = new Response();
+            try
             {
+                Servicios Servicios = new Servicios();
+                resultado = Servicios.FinalizarArriendo(ServicioId);
             }
+
+            catch (Exception ex) { }
 
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }

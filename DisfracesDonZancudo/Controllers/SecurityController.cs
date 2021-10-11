@@ -1,4 +1,4 @@
-﻿using DisfracesDonZancudo.Models;
+﻿using Core.Model;
 using DisfracesDonZancudo.Models.Export;
 using System;
 using System.Collections.Generic;
