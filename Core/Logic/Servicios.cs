@@ -151,13 +151,20 @@ namespace Core.Logic
                     if (cliente.tipo_cliente_id != 3)
                     {
                         /* Si el clientes es categoria normal y cumple el requisito de 3 servicios totales puede ser premium */
-                        if (cliente.tipo_cliente_id == 1 && cliente.total_servicios > 3) { cliente.tipo_cliente_id = 2; }
+                        if (cliente.tipo_cliente_id == 1 && cliente.total_servicios > 3) 
+                        { 
+                            cliente.tipo_cliente_id = 2;
+                            contexto.SaveChanges();
+                            result.Status = true;
+                        }
 
                         /* Si el clientes es categoria premium y cumple el requisito de 13 servicios totales puede ser Empresarial */
-                        else if (cliente.tipo_cliente_id == 2 && cliente.total_servicios > 13) { cliente.tipo_cliente_id = 3; }
-
-                        contexto.SaveChanges();
-                        result.Status = true;
+                        else if (cliente.tipo_cliente_id == 2 && cliente.total_servicios > 13) 
+                        { 
+                            cliente.tipo_cliente_id = 3;
+                            contexto.SaveChanges();
+                            result.Status = true;
+                        }
                     }
                 }
             }
@@ -357,8 +364,16 @@ namespace Core.Logic
                     /* Creacion del cliente */
                     clienteAct = CreateCliente(rut, nombres, apellidos, telefono);
 
-                    /* Metodo Maestro */
-                    response = Proceso(clienteAct.id, observacion, fechaArriendo, diasArriendo, disfrazId, tipoPagoId, cantidad);
+                    /* Consulta si el cliente puede realizar un nuevo servicio  */
+                    Response consulta = ClientePuedeArrendar(clienteAct.id, clienteAct.tipo_cliente_id, cantidad);
+
+                    if (!consulta.Status) { response.Message = consulta.Message; }
+
+                    else
+                    {
+                        /* Metodo Maestro */
+                        response = Proceso(clienteAct.id, observacion, fechaArriendo, diasArriendo, disfrazId, tipoPagoId, cantidad);
+                    }
                 }
 
                 /* El cliente existe en BD */
@@ -385,6 +400,8 @@ namespace Core.Logic
         public Response FinalizarArriendo(int servicioId)
         {
             Response response = new Response();
+            response.Data = false;
+
             try
             {
                 using (DonZancudoEntities contexto = new DonZancudoEntities())
@@ -410,6 +427,7 @@ namespace Core.Logic
                     if (DateTime.Now.Date > fechaFinalizacion)
                     {
                         response.Message = "Se le cobrara una multa al cliente por pasarse de los dias arrendados. ";
+                        response.Data = true;
                     }
 
                     response.Message += "Operación Exitosa.";

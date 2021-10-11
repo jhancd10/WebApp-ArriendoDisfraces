@@ -50,5 +50,15 @@ namespace UnitTest
 
             Assert.IsFalse(resultado.Status);
         }
+
+        [TestMethod]
+        public void TestServicio_ServicioActivo()
+        {
+            Servicios Servicios = new Servicios();
+
+            int servicioId = 1;
+            var resultado = Servicios.FinalizarArriendo(servicioId);
+            Assert.IsTrue(resultado.Status);
+        }
     }
 }
