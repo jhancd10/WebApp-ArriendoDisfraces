@@ -5,7 +5,6 @@ C:\Users\Usuario\Desktop\Pruebas\WebApp-ArriendoDisfraces\Core\bin\Debug\EntityF
 C:\Users\Usuario\Desktop\Pruebas\WebApp-ArriendoDisfraces\Core\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\Usuario\Desktop\Pruebas\WebApp-ArriendoDisfraces\Core\bin\Debug\EntityFramework.xml
 C:\Users\Usuario\Desktop\Pruebas\WebApp-ArriendoDisfraces\Core\bin\Debug\EntityFramework.SqlServer.xml
-C:\Users\Usuario\Desktop\Pruebas\WebApp-ArriendoDisfraces\Core\obj\Debug\Core.csproj.AssemblyReference.cache
 C:\Users\Usuario\Desktop\Pruebas\WebApp-ArriendoDisfraces\Core\obj\Debug\Core.csproj.CoreCompileInputs.cache
 C:\Users\Usuario\Desktop\Pruebas\WebApp-ArriendoDisfraces\Core\obj\Debug\Core.csproj.CopyComplete
 C:\Users\Usuario\Desktop\Pruebas\WebApp-ArriendoDisfraces\Core\obj\Debug\Core.dll

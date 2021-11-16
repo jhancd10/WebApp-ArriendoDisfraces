@@ -190,7 +190,7 @@ function FinalizarArriendo() {
         ServicioId: servicioId
     };
 
-    PostAjax('/CentroDistribucion/FinalizarArriendo', params, function (data) {
+    $.post('/Home/FinalizarArriendo', params, function (data) {
 
         if (!data.Status) {
             $('#lblTituloMensaje').text("Alerta");
